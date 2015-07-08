@@ -1,0 +1,4 @@
+<http://example.com/s1> <http://example.com/p1> <http://example.com/o1> .
+<http://example.com/s2> <http://example.com/p2> "String" .
+<http://example.com/s3> <http://example.com/p3> _:b1 .
+_:b1 <http://example.com/p4> <http://example.com/s1> .
