@@ -24,7 +24,7 @@ import com.hp.hpl.jena.sparql.util.Context;
 
 public class Parser {
 	public void parseInto(Path file, final Graph g) throws IOException {
-		factory.remove();
+		factory.remove(); // to ensure blank-nodes are unique per parse
 		ReaderRIOT reader = RDFDataMgr.createReader(Lang.NTRIPLES);
 		try (InputStream in = Files.newInputStream(file)) {
 			ContentType contentType = Lang.NTRIPLES.getContentType();
@@ -36,6 +36,7 @@ public class Parser {
 				public void start() {
 				}				
 				public void quad(Quad quad) {
+					// TODO: How should quads be handled?
 					g.add(toCommonsRDF(quad.asTriple()));
 				}				
 				public void prefix(String prefix, String ns) {
