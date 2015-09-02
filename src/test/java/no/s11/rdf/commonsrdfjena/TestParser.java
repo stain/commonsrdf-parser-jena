@@ -1,9 +1,9 @@
 package no.s11.rdf.commonsrdfjena;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.InputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -15,10 +15,12 @@ import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.simple.SimpleRDFTermFactory;
 import org.junit.Test;
 
+import no.s11.rdf.commonsrdfjena.impl.ParserFactory;
+
 public class TestParser {
 
 	static SimpleRDFTermFactory factory = new SimpleRDFTermFactory();
-	
+
 	IRI s1 = factory.createIRI("http://example.com/s1");
 	IRI s2 = factory.createIRI("http://example.com/s2");
 	IRI s3 = factory.createIRI("http://example.com/s3");
@@ -28,22 +30,26 @@ public class TestParser {
 	IRI p4 = factory.createIRI("http://example.com/p4");
 	IRI o1 = factory.createIRI("http://example.com/o1");
 
-	
 	@Test
 	public void testName() throws Exception {
-		Parser p = new Parser();
+		
+		
+		
+		//JenaParser p = new JenaParser();
 		Graph g = factory.createGraph();
-		Path path = Files.createTempFile("test", "ntriples");
+		Path path = Files.createTempFile("test", ".nt");
+		System.out.println(path);
 		InputStream testStream = getClass().getResourceAsStream("/test.ntriples");
 		Files.copy(testStream, path, StandardCopyOption.REPLACE_EXISTING);
-		p.parseInto(path, g);
+		ParserFactory pf = new ParserFactory();
+		g = pf.graph(g).path(path).parse();
 		assertEquals(4l, g.size());
-		
+
 		assertTrue(g.contains(s1, p1, o1));
 		assertTrue(g.contains(s2, p2, factory.createLiteral("String")));
 		RDFTerm b1 = g.getTriples(s3, p3, null).findFirst().get().getObject();
 		assertTrue(b1 instanceof BlankNode);
-		assertEquals(s1, g.getTriples((BlankNode)b1, p4, null).findFirst().get().getObject());
-		
+		assertEquals(s1, g.getTriples((BlankNode) b1, p4, null).findFirst().get().getObject());
+
 	}
 }
