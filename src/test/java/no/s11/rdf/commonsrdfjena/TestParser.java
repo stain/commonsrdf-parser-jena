@@ -34,17 +34,17 @@ public class TestParser {
 
 	private Path examplePath;
 
-	Parser pf = new JenaParser();
+	Parser parser = new JenaParser();
 
 	@Test(expected=IllegalStateException.class)
 	public void parseNoSource() throws Exception {
-		pf.parse();
+		parser.parse();
 	}
 	
 	
 	@Test
 	public void parseFile() throws Exception {
-		Parser pfWithPath = pf.path(examplePath);
+		Parser pfWithPath = parser.path(examplePath);
 		Graph g1 = pfWithPath.parse();
 		checkParsedGraph(g1);
 		Graph g2 = pfWithPath.parse();
@@ -54,7 +54,7 @@ public class TestParser {
 	@Test
 	public void parseFileToGraph() throws Exception {
 		Graph g = factory.createGraph();
-		Graph g2 = pf.graph(g).path(examplePath).parse();
+		Graph g2 = parser.graph(g).path(examplePath).parse();
 		assertSame(g2, g);
 		checkParsedGraph(g2);
 	}
@@ -68,20 +68,20 @@ public class TestParser {
 
 	@Test
 	public void parseFileWithContentType() throws Exception {
-		Graph g = pf.path(examplePath).contentType(Parser.NTRIPLES).parse();
+		Graph g = parser.path(examplePath).contentType(Parser.NTRIPLES).parse();
 		checkParsedGraph(g);
 	}
 	
 	@Test
 	public void parseFileWithAlternateContentType() throws Exception {
 		// Ntriples can be parsed as Turtle (but not vice versa)
-		Graph g = pf.path(examplePath).contentType(Parser.TURTLE).parse();
+		Graph g = parser.path(examplePath).contentType(Parser.TURTLE).parse();
 		checkParsedGraph(g);
 	}
 	
 	@Test(expected=Exception.class)
 	public void parseFileWithWrongType() throws Exception {
-		pf.path(examplePath).contentType(Parser.RDFXML).parse();
+		parser.path(examplePath).contentType(Parser.RDFXML).parse();
 	}
 	
 	private void checkParsedGraph(Graph g) {
