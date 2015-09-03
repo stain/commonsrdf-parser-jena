@@ -11,6 +11,12 @@ by using [Apache Jena](https://jena.apache.org/documentation/io/)'s
 parsers as discovered through 
 [RDFDataMgr](https://jena.apache.org/documentation/javadoc/arq/org/apache/jena/riot/RDFDataMgr.html).
 
+This can be useful for Commons RDF implementations which don't have native 
+parsers, e.g. the built-in _simple_ implementation.
+
+See also [JENA-1015](https://issues.apache.org/jira/browse/JENA-1015) which is somewhat orthogonal, as that
+aims to provide bindings for the Commons RDF API using Jena's data structures.
+
 ## Building
 
     mvn clean install
