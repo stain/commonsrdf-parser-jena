@@ -8,6 +8,22 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
+
+
+    <name>commonsrdf-parser-jena</name>
+    <url>https://github.com/stain/commonsrdf-parser-jena</url>
+
+    <inceptionYear>2015</inceptionYear>
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
