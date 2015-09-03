@@ -79,7 +79,7 @@ public class TestParser {
 		checkParsedGraph(g);
 	}
 	
-	@Test(expected=IOException.class)
+	@Test(expected=Exception.class)
 	public void parseFileWithWrongType() throws Exception {
 		pf.path(examplePath).contentType(Parser.RDFXML).parse();
 	}
