@@ -1,5 +1,5 @@
 # commonsrdf-parser-jena
-Parsers for Apache Commons RDF, backed by Jena
+Parsers for Apache Commons RDF, backed by Apache Jena
 
 * Author: [Stian Soiland-Reyes](http://orcid.org/0000-0001-9842-9718)
 * License: [Apache License, version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
