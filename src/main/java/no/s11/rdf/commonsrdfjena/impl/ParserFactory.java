@@ -2,6 +2,7 @@ package no.s11.rdf.commonsrdfjena.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -27,8 +28,12 @@ import com.hp.hpl.jena.sparql.core.Quad;
 import com.hp.hpl.jena.sparql.util.Context;
 
 
-public class ParserFactory {
+public class ParserFactory implements Serializable,Cloneable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8760671908863617183L;
 	public static final String JSONLD = "application/ld+json";
 	public static final String TURTLE = "text/turtle";
 	public static final String NQUADS = "application/n-quads";
