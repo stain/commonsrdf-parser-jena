@@ -15,8 +15,8 @@ import org.apache.commons.rdf.api.RDFTerm;
 import org.apache.commons.rdf.simple.SimpleRDFTermFactory;
 import org.junit.Test;
 
-import no.s11.rdf.commonsrdfjena.ParserFactory;
-import no.s11.rdf.commonsrdfjena.impl.ParserFactoryJena;
+import no.s11.rdf.commonsrdfjena.Parser;
+import no.s11.rdf.commonsrdfjena.impl.JenaParser;
 
 public class TestParser {
 
@@ -39,7 +39,7 @@ public class TestParser {
 		System.out.println(path);
 		InputStream testStream = getClass().getResourceAsStream("/test.ntriples");
 		Files.copy(testStream, path, StandardCopyOption.REPLACE_EXISTING);
-		ParserFactory pf = new ParserFactoryJena();
+		Parser pf = new JenaParser();
 		g = pf.graph(g).path(path).parse();
 		assertEquals(4l, g.size());
 

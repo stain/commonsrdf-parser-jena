@@ -9,7 +9,7 @@ import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTermFactory;
 
-public interface ParserFactory extends Cloneable {
+public interface Parser extends Cloneable {
 	
 	String JSONLD = "application/ld+json";
 	String TURTLE = "text/turtle";
@@ -30,27 +30,27 @@ public interface ParserFactory extends Cloneable {
 
 	InputStream getInputStream();
 
-	ParserFactory clone();
+	Parser clone();
 
 	Graph getGraph();
 
-	ParserFactory rdfTermFactory(RDFTermFactory rdfTermFactory);
+	Parser rdfTermFactory(RDFTermFactory rdfTermFactory);
 
-	ParserFactory base(IRI base);
+	Parser base(IRI base);
 
-	ParserFactory path(Path file);
+	Parser path(Path file);
 
-	ParserFactory contentType(String contentType);
+	Parser contentType(String contentType);
 
-	ParserFactory inputStream(InputStream inputStream);
+	Parser inputStream(InputStream inputStream);
 
-	ParserFactory base(String base);
+	Parser base(String base);
 
-	ParserFactory url(URL url);
+	Parser url(URL url);
 
-	ParserFactory url(String url);
+	Parser url(String url);
 
-	ParserFactory graph(Graph graph);
+	Parser graph(Graph graph);
 
 	Graph parse() throws IOException;
 	

@@ -23,7 +23,7 @@ import com.hp.hpl.jena.sparql.core.Quad;
 import com.hp.hpl.jena.sparql.util.Context;
 
 
-public class ParserFactoryJena extends AbstractParserFactory {
+public class JenaParser extends AbstractParser {
 
 	@Override
 	public Graph parse() throws IOException {

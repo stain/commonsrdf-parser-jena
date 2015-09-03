@@ -10,9 +10,9 @@ import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTermFactory;
 import org.apache.commons.rdf.simple.SimpleRDFTermFactory;
 
-import no.s11.rdf.commonsrdfjena.ParserFactory;
+import no.s11.rdf.commonsrdfjena.Parser;
 
-public abstract class AbstractParserFactory implements ParserFactory {
+public abstract class AbstractParser implements Parser {
 
 	protected RDFTermFactory rdfTermFactory;
 	protected IRI base;
@@ -22,7 +22,7 @@ public abstract class AbstractParserFactory implements ParserFactory {
 	protected InputStream inputStream;
 	protected Graph graph;
 
-	public AbstractParserFactory() {
+	public AbstractParser() {
 		super();
 	}
 
@@ -57,9 +57,9 @@ public abstract class AbstractParserFactory implements ParserFactory {
 	}
 	
 	@Override
-	public AbstractParserFactory clone() {
+	public AbstractParser clone() {
 		try {
-			return (AbstractParserFactory) super.clone();
+			return (AbstractParser) super.clone();
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException(e);
 		}		
@@ -71,45 +71,45 @@ public abstract class AbstractParserFactory implements ParserFactory {
 	}
 
 	@Override
-	public ParserFactory rdfTermFactory(RDFTermFactory rdfTermFactory) {
-		AbstractParserFactory f = clone();
+	public Parser rdfTermFactory(RDFTermFactory rdfTermFactory) {
+		AbstractParser f = clone();
 		f.rdfTermFactory = rdfTermFactory;
 		return f;
 	}
 
 	@Override
-	public ParserFactory base(IRI base) {
-		AbstractParserFactory f = clone();
+	public Parser base(IRI base) {
+		AbstractParser f = clone();
 		f.base = base;
 		return f;
 	}
 
 	@Override
-	public ParserFactory path(Path file) {
-		AbstractParserFactory f = clone();
+	public Parser path(Path file) {
+		AbstractParser f = clone();
 		f.resetInputs();
 		f.file = file;
 		return f;
 	}
 
 	@Override
-	public ParserFactory contentType(String contentType) {
-		AbstractParserFactory f = clone();
+	public Parser contentType(String contentType) {
+		AbstractParser f = clone();
 		f.contentType = contentType;
 		return f;
 	}
 
 	@Override
-	public ParserFactory inputStream(InputStream inputStream) {
-		AbstractParserFactory f = clone();
+	public Parser inputStream(InputStream inputStream) {
+		AbstractParser f = clone();
 		f.resetInputs();
 		f.inputStream = inputStream;
 		return f;
 	}
 
 	@Override
-	public ParserFactory base(String base) {
-		AbstractParserFactory f = clone();
+	public Parser base(String base) {
+		AbstractParser f = clone();
 		if (f.rdfTermFactory != null) {
 			f.base = f.rdfTermFactory.createIRI(base);			
 		} else {
@@ -119,15 +119,15 @@ public abstract class AbstractParserFactory implements ParserFactory {
 	}
 
 	@Override
-	public ParserFactory url(URL url) {
-		AbstractParserFactory f = clone();
+	public Parser url(URL url) {
+		AbstractParser f = clone();
 		f.resetInputs();
 		f.url = url;
 		return f;
 	}
 
 	@Override
-	public ParserFactory url(String url) {
+	public Parser url(String url) {
 		try {
 			return url(new URL(url));
 		} catch (MalformedURLException e) {
@@ -136,8 +136,8 @@ public abstract class AbstractParserFactory implements ParserFactory {
 	}
 
 	@Override
-	public ParserFactory graph(Graph graph) {
-		AbstractParserFactory f = clone();
+	public Parser graph(Graph graph) {
+		AbstractParser f = clone();
 		f.graph = graph;
 		return f;
 	}
