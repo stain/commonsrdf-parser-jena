@@ -1,7 +1,6 @@
 package no.s11.rdf.commonsrdfjena.impl;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLConnection;
 import java.nio.file.Files;
 import java.util.UUID;
@@ -27,14 +26,16 @@ public class JenaParser extends AbstractParser {
 
 	@Override
 	public Graph parse() throws IOException {
+		// Clone so we can modify rdfTermFactory/graph etc
+		return ((JenaParser)clone()).parseImpl();
+	}
+	
+	private Graph parseImpl() throws IOException {
 		if (rdfTermFactory == null) {
 			rdfTermFactory = new SimpleRDFTermFactory();
 		}
-		final Graph g;
 		if (graph == null) {
-			g = graph;
-		} else {
-			g = rdfTermFactory.createGraph();
+			graph = rdfTermFactory.createGraph();
 		}
 		String baseUrl;
 		if (base != null) {
@@ -89,17 +90,17 @@ public class JenaParser extends AbstractParser {
 		if (reader == null) {
 			throw new IllegalArgumentException("No RDF reader for language " + lang);
 		}
-		try (InputStream in = Files.newInputStream(file)) {
+		try {
 			StreamRDF streamRDF = new StreamRDF() {
 				
 				public void triple(Triple triple) {
-					g.add(toCommonsRDF(triple));					
+					graph.add(toCommonsRDF(triple));					
 				}				
 				public void start() {
 				}				
 				public void quad(Quad quad) {
 					// TODO: How should quads be handled?
-					g.add(toCommonsRDF(quad.asTriple()));
+					graph.add(toCommonsRDF(quad.asTriple()));
 				}				
 				public void prefix(String prefix, String ns) {
 				}				
@@ -108,10 +109,14 @@ public class JenaParser extends AbstractParser {
 				public void base(String base) {
 				}
 			};
-			Context arg4 = new Context();
-			reader.read(in, file.toUri().toASCIIString(), lang.getContentType(), streamRDF, arg4);
-			return g;
-		}		
+			Context ctx = new Context();
+			reader.read(inputStream, baseUrl, lang.getContentType(), streamRDF, ctx);
+			return graph;
+		} finally {
+			if (mustClose) { 
+				inputStream.close();
+			}
+		}
 	}
 
 

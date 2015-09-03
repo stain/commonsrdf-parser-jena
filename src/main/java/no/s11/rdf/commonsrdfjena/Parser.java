@@ -52,6 +52,6 @@ public interface Parser extends Cloneable {
 
 	Parser graph(Graph graph);
 
-	Graph parse() throws IOException;
+	Graph parse() throws IOException, IllegalStateException;
 	
 }
