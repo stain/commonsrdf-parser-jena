@@ -2,19 +2,14 @@ package no.s11.rdf.commonsrdfjena.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.UUID;
 
 import org.apache.commons.rdf.api.BlankNodeOrIRI;
 import org.apache.commons.rdf.api.Graph;
 import org.apache.commons.rdf.api.IRI;
 import org.apache.commons.rdf.api.RDFTerm;
-import org.apache.commons.rdf.api.RDFTermFactory;
 import org.apache.commons.rdf.simple.SimpleRDFTermFactory;
 import org.apache.jena.riot.Lang;
 import org.apache.jena.riot.RDFDataMgr;
@@ -28,131 +23,9 @@ import com.hp.hpl.jena.sparql.core.Quad;
 import com.hp.hpl.jena.sparql.util.Context;
 
 
-public class ParserFactory implements Serializable,Cloneable {
+public class ParserFactoryJena extends AbstractParserFactory {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8760671908863617183L;
-	public static final String JSONLD = "application/ld+json";
-	public static final String TURTLE = "text/turtle";
-	public static final String NQUADS = "application/n-quads";
-	public static final String NTRIPLES = "application/n-triples";
-	public static final String RDFXML = "application/rdf+xml";
-	public static final String TRIG = "application/trig";
-	
-	private RDFTermFactory rdfTermFactory;
-	private IRI base;
-	private Path file;
-	private String contentType;
-	private URL url;
-	private InputStream inputStream;
-	private Graph graph;
-
-	public IRI getBase() {
-		return base;
-	}
-
-	public Path getFile() {
-		return file;
-	}
-
-	public String getContentType() {
-		return contentType;
-	}
-
-	public RDFTermFactory getRDFTermFactory() {
-		return rdfTermFactory;
-	}
-	
-	public URL getUrl() {
-		return url;
-	}
-
-	public InputStream getInputStream() {
-		return inputStream;
-	}
-
-	public ParserFactory clone() {
-		try {
-			return (ParserFactory) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new RuntimeException(e);
-		}		
-	}
-	
-	
-	public Graph getGraph() {
-		return graph;
-	}
-	
-	public ParserFactory rdfTermFactory(RDFTermFactory rdfTermFactory) {
-		ParserFactory f = clone();
-		f.rdfTermFactory = rdfTermFactory;
-		return f;
-	}
-
-	public ParserFactory base(IRI base) {
-		ParserFactory f = clone();
-		f.base = base;
-		return f;
-	}
-	
-	public ParserFactory path(Path file) {
-		ParserFactory f = clone();
-		f.resetInputs();
-		f.file = file;
-		return f;
-	}
-
-	private void resetInputs() {
-		this.file = null;
-		this.url = null;
-		this.inputStream = null;
-	}
-
-	public ParserFactory contentType(String contentType) {
-		ParserFactory f = clone();
-		f.contentType = contentType;
-		return f;
-	}
-
-	public ParserFactory inputStream(InputStream inputStream) {
-		ParserFactory f = clone();
-		f.resetInputs();
-		f.inputStream = inputStream;
-		return f;
-	}
-	
-	
-	public ParserFactory base(String base) {
-		ParserFactory f = clone();
-		f.base = rdfTermFactory.createIRI(base);
-		return f;
-	}
-
-
-	public ParserFactory url(URL url) {
-		ParserFactory f = clone();
-		f.resetInputs();
-		f.url = url;
-		return f;
-	}
-
-	public ParserFactory url(String url) {
-		try {
-			return url(new URL(url));
-		} catch (MalformedURLException e) {
-			throw new IllegalArgumentException(e);
-		}
-	}	
-	
-	public ParserFactory graph(Graph graph) {
-		ParserFactory f = clone();
-		f.graph = graph;
-		return f;
-	}
-
+	@Override
 	public Graph parse() throws IOException {
 		if (rdfTermFactory == null) {
 			rdfTermFactory = new SimpleRDFTermFactory();
